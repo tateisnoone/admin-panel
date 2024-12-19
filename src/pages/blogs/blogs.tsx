@@ -4,7 +4,7 @@ import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Table } from "antd";
 import Column from "antd/es/table/Column";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 type Blog = {
   id: string;
@@ -19,11 +19,11 @@ const Blogs = () => {
     queryKey: ["blogsList"],
     queryFn: getBlogslistAsAdmin,
   });
+  const navigate = useNavigate();
 
-  //   const handleSubmit = (values: { email: string; phone: string }) => {
-  //     EditUserInAdmin(id as string, values);
-  //     navigate("/dashboard/users");
-  //   };
+  const handleNavigateToBlogEdit = (id: string) => {
+    navigate(`/dashboard/blogs/edit/${id}`);
+  };
 
   const mappedUsers = mapBlogsListForAdmin(data);
 
@@ -53,7 +53,7 @@ const Blogs = () => {
             <EditOutlined
               className="cursor-pointer"
               onClick={() => {
-                handleNavigateToUserEdit(row?.id);
+                handleNavigateToBlogEdit(row?.id);
               }}
             />
           );

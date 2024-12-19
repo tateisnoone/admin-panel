@@ -55,9 +55,30 @@ export const CreateBlogAsAdmin = async (newBlogValues: {
   }
 };
 
+export const EditBlogAsAdmin = async (
+  id: number | string,
+  payload: {
+    title: string;
+    title_ge: string;
+    description: string;
+    description_ge: string;
+  }
+) => {
+  const { data, error } = await supabase
+    .from("blog")
+    .update({ ...payload })
+    .eq("id", id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+
 export type Blog = {
   created_at: string;
-  id: number;
+  id: number | string;
   user_id: string;
   title: string;
   title_ge: string;
