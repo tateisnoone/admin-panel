@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { Blog, User } from ".";
 
 export const mapUsersListForAdmin = (users: User[]) => {
@@ -6,8 +7,8 @@ export const mapUsersListForAdmin = (users: User[]) => {
     id: user?.id,
     email: user?.email,
     phone: user?.phone,
-    createdAt: user?.created_at,
-    lastSignIn: user?.last_sign_in_at,
+    createdAt: dayjs(user.created_at).format("YYYY-MM-DD HH:mm"),
+    lastSignIn: dayjs(user?.last_sign_in_at).format("YYYY-MM-DD HH:mm"),
   }));
 };
 
@@ -16,7 +17,7 @@ export const mapBlogsListForAdmin = (blogs: Blog[]) => {
     key: blog.id,
     id: blog?.id,
     userId: blog?.user_id,
-    createdAt: blog?.created_at,
+    createdAt: dayjs(blog?.created_at).format("YYYY-MM-DD HH:mm"),
     title: blog?.title,
     description: blog?.description,
   }));
