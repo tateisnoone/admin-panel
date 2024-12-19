@@ -35,6 +35,18 @@ export const getBlogslistAsAdmin = async (): Promise<Blog[]> => {
   return data as Blog[];
 };
 
+export const getBlogByIdAsAdmin = async (id: string): Promise<Blog> => {
+  const { data, error } = await supabase
+    .from("blog")
+    .select("*")
+    .eq("id", id)
+    .single();
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data as Blog;
+};
+
 export const CreateBlogAsAdmin = async (newBlogValues: {
   title: string;
   title_ge: string;

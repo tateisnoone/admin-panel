@@ -10,7 +10,6 @@ const UserEditView = () => {
     queryFn: () => GetUserInfoById(id as string),
   });
 
-  console.log("user info:", data);
   const initialValues = data
     ? {
         email: data.email || "",

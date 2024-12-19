@@ -44,7 +44,7 @@ const Blogs = () => {
       <Column<Blog> title="User Id" dataIndex="userId" />
       <Column<Blog> title="Created At" dataIndex="createdAt" />
       <Column<Blog> title="Title" dataIndex="title" />
-      <Column<Blog> title="Description" dataIndex="title" />
+      <Column<Blog> title="Description" dataIndex="description" />
 
       <Column<Blog>
         title="Actions"

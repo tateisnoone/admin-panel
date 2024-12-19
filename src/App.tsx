@@ -18,7 +18,6 @@ import UserEditView from "./pages/users/views/edit";
 import BlogCreateView from "./pages/blogs/components/views/create";
 import BlogEditView from "./pages/blogs/components/views/edit";
 const App: React.FC = () => {
-  // const { handleSetUser } = useAuthContext();
   const [, setUser] = useAtom(userAtom);
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {

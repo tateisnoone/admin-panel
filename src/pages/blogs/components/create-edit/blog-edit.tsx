@@ -1,11 +1,16 @@
-import { EditBlogAsAdmin, EditUserInAdmin } from "@/api/admin";
+import { EditBlogAsAdmin } from "@/api/admin";
 import { Button, Form, Input } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useNavigate, useParams } from "react-router-dom";
 
 const { Item } = Form;
 
-type InitialValues = { title: string; description: string };
+type InitialValues = {
+  title: string;
+  title_ge: string;
+  description: string;
+  description_ge: string;
+};
 
 const BlogsEditForm: React.FC<{
   initialValues?: InitialValues;
