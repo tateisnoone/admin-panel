@@ -44,20 +44,7 @@ const App: React.FC = () => {
                 <SignIn />
               </AuthGuardAuthorized>
             }
-          >
-            {/* <Route
-              path="/sign-up"
-              element={
-                <AuthGuard>
-                  <Register />
-                </AuthGuard>
-              }
-            />
-            <Route path="/about" element={<AboutView />} />
-            <Route path="/author" element={<AuthorView />} />
-            <Route path="/profile" element={<ProfileView />} />
-            <Route path="/create-blog" element={<CreateBlog />} /> */}
-          </Route>
+          ></Route>
           <Route
             path="/dashboard"
             element={
@@ -67,14 +54,15 @@ const App: React.FC = () => {
             }
           >
             <Route path="users">
-              <Route index element={<Users />} /> {/* Default users list */}
+              <Route index element={<Users />} />
               <Route path="create" element={<UserCreateView />} />
               <Route path="edit/:id" element={<UserEditView />} />{" "}
-              {/* Nested edit route */}
             </Route>
-            <Route path="blogs" element={<Blogs />}>
+
+            <Route path="blogs">
+              <Route index element={<Blogs />} />
               <Route path="create" element={<BlogCreateView />} />
-              <Route path="edit/:id" element={<BlogEditView />} />{" "}
+              <Route path="edit/:id" element={<BlogEditView />} />
             </Route>
           </Route>
 

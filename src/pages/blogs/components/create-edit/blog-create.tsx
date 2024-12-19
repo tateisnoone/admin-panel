@@ -1,36 +1,45 @@
-import { EditUserInAdmin } from "@/api/admin";
+import { CreateBlogAsAdmin } from "@/api/admin";
 import { Button, Form, Input } from "antd";
 import { useForm } from "antd/es/form/Form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const { Item } = Form;
 
-type InitialValues = { title: string; description: string };
-
-const BlogsCreateForm: React.FC<{
-  initialValues?: InitialValues;
-}> = ({ initialValues }) => {
-  const { id } = useParams();
-  const [form] = useForm<InitialValues>();
+const BlogsCreateForm: React.FC = () => {
+  const [form] = useForm();
   const navigate = useNavigate();
 
-  const handleSubmit = (values: { email: string; phone: string }) => {
-    EditUserInAdmin(id as string, values);
-    navigate("/dashboard/users");
+  const handleSubmit = async (values: {
+    title: string;
+    description: string;
+    title_ge: string;
+    description_ge: string;
+  }) => {
+    try {
+      await CreateBlogAsAdmin(values);
+      navigate("/dashboard/blogs");
+    } catch (error) {
+      console.error("Failed to create blog:", error);
+    }
   };
 
   return (
-    <Form<InitialValues>
-      initialValues={initialValues}
-      form={form}
-      onFinish={handleSubmit}
-      style={{ maxWidth: 600 }}
-    >
-      <Item label="Email" name="email" rules={[{ required: true }]}>
-        <Input placeholder="Enter Email" />
+    <Form form={form} onFinish={handleSubmit} style={{ maxWidth: 600 }}>
+      <Item label="Title" name="title" rules={[{ required: true }]}>
+        <Input placeholder="Enter Title" />
       </Item>
-      <Item label="Phone" name="phone" rules={[{ required: false }]}>
-        <Input placeholder="Enter Phone" />
+      <Item label="Description" name="description" rules={[{ required: true }]}>
+        <Input placeholder="Enter Description" />
+      </Item>
+      <Item label="TitleGE" name="title_ge" rules={[{ required: true }]}>
+        <Input placeholder="Enter Title in GE" />
+      </Item>
+      <Item
+        label="DescriptionGe"
+        name="description_ge"
+        rules={[{ required: true }]}
+      >
+        <Input placeholder="Enter Description in GE" />
       </Item>
 
       <Item>

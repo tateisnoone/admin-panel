@@ -35,9 +35,25 @@ export const getBlogslistAsAdmin = async (): Promise<Blog[]> => {
   return data as Blog[];
 };
 
-// export const editBlogsAsAdmin = async (id: string): Promise<Blog[]> => {
-//   return supabase.from("blog").update();
-// };
+export const CreateBlogAsAdmin = async (newBlogValues: {
+  title: string;
+  title_ge: string;
+  description: string;
+  description_ge: string;
+}) => {
+  try {
+    const { data, error } = await supabase.from("blog").insert(newBlogValues);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error creating blog:", error);
+    throw error;
+  }
+};
 
 export type Blog = {
   created_at: string;
