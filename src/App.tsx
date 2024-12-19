@@ -15,6 +15,8 @@ import Users from "./pages/users/users";
 import Blogs from "./pages/blogs/blogs";
 import UserCreateView from "./pages/users/views/create";
 import UserEditView from "./pages/users/views/edit";
+import BlogCreateView from "./pages/blogs/components/views/create";
+import BlogEditView from "./pages/blogs/components/views/edit";
 const App: React.FC = () => {
   // const { handleSetUser } = useAuthContext();
   const [, setUser] = useAtom(userAtom);
@@ -70,7 +72,10 @@ const App: React.FC = () => {
               <Route path="edit/:id" element={<UserEditView />} />{" "}
               {/* Nested edit route */}
             </Route>
-            <Route path="blogs" element={<Blogs />} />
+            <Route path="blogs" element={<Blogs />}>
+              <Route path="create" element={<BlogCreateView />} />
+              <Route path="edit/:id" element={<BlogEditView />} />{" "}
+            </Route>
           </Route>
 
           {/* <Route path="*" element={<NotFoundPage />} /> */}

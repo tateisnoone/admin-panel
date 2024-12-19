@@ -1,16 +1,17 @@
 import { getUserListAsAdmin } from "@/api/admin";
 import { mapUsersListForAdmin } from "@/api/admin/utils";
-import { EditOutlined } from "@ant-design/icons";
+import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
-import { Table } from "antd";
+import { Button, Table } from "antd";
 import Column from "antd/es/table/Column";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 type User = {
   id: string;
   email: string;
   last_sign_in_at: string;
   created_at: string;
+  phone: string;
 };
 
 const Users = () => {
@@ -27,9 +28,21 @@ const Users = () => {
   };
 
   return (
-    <Table bordered dataSource={mappedUsers}>
+    <Table
+      title={() => (
+        <NavLink to="/dashboard/users/create">
+          {" "}
+          <Button type="primary" icon={<PlusOutlined />}>
+            Create User
+          </Button>{" "}
+        </NavLink>
+      )}
+      bordered
+      dataSource={mappedUsers}
+    >
       <Column<User> title="Id" dataIndex="id" />
       <Column<User> title="Email" dataIndex="email" />
+      <Column<User> title="Phone" dataIndex="phone" />
       <Column<User> title="Created At" dataIndex="createdAt" />
       <Column<User> title="Last Sign In" dataIndex="lastSignIn" />
       <Column<User>

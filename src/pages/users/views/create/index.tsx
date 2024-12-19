@@ -1,7 +1,7 @@
-import UsersCreateEditForm from "../../components/create-edit/user-create-edit";
+import UsersCreateForm from "../../components/create-edit/user-create";
 
 const UserCreateView = () => {
-  return <UsersCreateEditForm />;
+  return <UsersCreateForm />;
 };
 
 export default UserCreateView;

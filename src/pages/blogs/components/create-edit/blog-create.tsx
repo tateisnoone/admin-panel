@@ -5,9 +5,9 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const { Item } = Form;
 
-type InitialValues = { email: string; phone: string };
+type InitialValues = { title: string; description: string };
 
-const UsersCreateEditForm: React.FC<{
+const BlogsCreateForm: React.FC<{
   initialValues?: InitialValues;
 }> = ({ initialValues }) => {
   const { id } = useParams();
@@ -16,8 +16,7 @@ const UsersCreateEditForm: React.FC<{
 
   const handleSubmit = (values: { email: string; phone: string }) => {
     EditUserInAdmin(id as string, values);
-
-    navigate("/dashboard");
+    navigate("/dashboard/users");
   };
 
   return (
@@ -30,6 +29,9 @@ const UsersCreateEditForm: React.FC<{
       <Item label="Email" name="email" rules={[{ required: true }]}>
         <Input placeholder="Enter Email" />
       </Item>
+      <Item label="Phone" name="phone" rules={[{ required: false }]}>
+        <Input placeholder="Enter Phone" />
+      </Item>
 
       <Item>
         <Button type="primary" htmlType="submit">
@@ -40,4 +42,4 @@ const UsersCreateEditForm: React.FC<{
   );
 };
 
-export default UsersCreateEditForm;
+export default BlogsCreateForm;

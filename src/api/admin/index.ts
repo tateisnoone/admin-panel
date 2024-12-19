@@ -26,15 +26,18 @@ export type User = {
   is_anonymous: boolean;
 };
 
-export const getBlogslistAsAdmin = () => {
-  return supabase
-    .from("blog")
-    .select("*")
-    .then((res) => {
-      console.log("blogs:", res.data);
-      return res.data as Blog[];
-    });
+export const getBlogslistAsAdmin = async (): Promise<Blog[]> => {
+  const { data, error } = await supabase.from("blog").select("*");
+
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data as Blog[];
 };
+
+// export const editBlogsAsAdmin = async (id: string): Promise<Blog[]> => {
+//   return supabase.from("blog").update();
+// };
 
 export type Blog = {
   created_at: string;
@@ -53,6 +56,21 @@ export const EditUserInAdmin = (id: string, payload: { email: string }) => {
 
 export const GetUserInfoById = (id: string) => {
   return supabase.auth.admin.getUserById(id).then((res) => {
+    console.log(res.data.user);
     return res.data.user;
+  });
+};
+
+export const CreateUserByAdmin = ({
+  email,
+  phone,
+}: {
+  email: string;
+  phone: string;
+}) => {
+  return supabase.auth.signUp({
+    email,
+    phone,
+    password: "Test12345!",
   });
 };

@@ -1,24 +1,64 @@
 import { getBlogslistAsAdmin } from "@/api/admin";
 import { mapBlogsListForAdmin } from "@/api/admin/utils";
+import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
-import { Table } from "antd";
+import { Button, Table } from "antd";
 import Column from "antd/es/table/Column";
+import { NavLink } from "react-router-dom";
+
+type Blog = {
+  id: string;
+  userId: string;
+  createdAt: string;
+  title: string;
+  description: string;
+};
 
 const Blogs = () => {
   const { data } = useQuery({
     queryKey: ["blogsList"],
-    queryFn: () => getBlogslistAsAdmin,
+    queryFn: getBlogslistAsAdmin,
   });
 
-  console.log("blogs:", data);
+  //   const handleSubmit = (values: { email: string; phone: string }) => {
+  //     EditUserInAdmin(id as string, values);
+  //     navigate("/dashboard/users");
+  //   };
+
   const mappedUsers = mapBlogsListForAdmin(data);
 
   return (
-    <Table bordered dataSource={mappedUsers}>
-      <Column title="Id" dataIndex="id" />
-      <Column title="User Id" dataIndex="userId" />
-      <Column title="Created At" dataIndex="createdAt" />
-      <Column title="Title" dataIndex="lastSignIn" />
+    <Table
+      title={() => (
+        <NavLink to="/dashboard/blogs/create">
+          {" "}
+          <Button type="primary" icon={<PlusOutlined />}>
+            Create Blog
+          </Button>{" "}
+        </NavLink>
+      )}
+      bordered
+      dataSource={mappedUsers}
+    >
+      <Column<Blog> title="Id" dataIndex="id" />
+      <Column<Blog> title="User Id" dataIndex="userId" />
+      <Column<Blog> title="Created At" dataIndex="createdAt" />
+      <Column<Blog> title="Title" dataIndex="title" />
+      <Column<Blog> title="Description" dataIndex="title" />
+
+      <Column<Blog>
+        title="Actions"
+        render={(_, row) => {
+          return (
+            <EditOutlined
+              className="cursor-pointer"
+              onClick={() => {
+                handleNavigateToUserEdit(row?.id);
+              }}
+            />
+          );
+        }}
+      />
     </Table>
   );
 };
