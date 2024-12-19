@@ -25,7 +25,7 @@ const Blogs = () => {
     navigate(`/dashboard/blogs/edit/${id}`);
   };
 
-  const mappedUsers = mapBlogsListForAdmin(data);
+  const mappedUsers = mapBlogsListForAdmin(data ?? []);
 
   return (
     <Table

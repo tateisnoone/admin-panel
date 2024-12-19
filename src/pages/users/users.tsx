@@ -21,7 +21,7 @@ const Users = () => {
     queryFn: getUserListAsAdmin,
   });
 
-  const mappedUsers = mapUsersListForAdmin(data);
+  const mappedUsers = mapUsersListForAdmin(data ?? []);
 
   const handleNavigateToUserEdit = (id: string) => {
     navigate(`/dashboard/users/edit/${id}`);
