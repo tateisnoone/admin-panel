@@ -1,5 +1,6 @@
 import { getBlogslistAsAdmin } from "@/api/admin";
 import { mapBlogsListForAdmin } from "@/api/admin/utils";
+import { useGetBlogsList } from "@/react-query/query/blogs";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Table } from "antd";
@@ -15,17 +16,14 @@ type Blog = {
 };
 
 const Blogs = () => {
-  const { data } = useQuery({
-    queryKey: ["blogsList"],
-    queryFn: getBlogslistAsAdmin,
+  const { data: blogs } = useGetBlogsList({
+    queryOptions: { select: mapBlogsListForAdmin },
   });
   const navigate = useNavigate();
 
   const handleNavigateToBlogEdit = (id: string) => {
     navigate(`/dashboard/blogs/edit/${id}`);
   };
-
-  const mappedUsers = mapBlogsListForAdmin(data ?? []);
 
   return (
     <Table
@@ -38,7 +36,7 @@ const Blogs = () => {
         </NavLink>
       )}
       bordered
-      dataSource={mappedUsers}
+      dataSource={blogs}
     >
       <Column<Blog> title="Id" dataIndex="id" />
       <Column<Blog> title="User Id" dataIndex="userId" />

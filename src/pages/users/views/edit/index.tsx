@@ -1,19 +1,16 @@
-import { GetUserInfoById } from "@/api/admin";
 import UsersCreateEditForm from "../../components/create-edit/user-edit";
-import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { useGetUserById } from "@/react-query/query/users";
 
 const UserEditView = () => {
   const { id } = useParams<{ id: string }>();
-  const { data, isLoading } = useQuery({
-    queryKey: ["userInfoById"],
-    queryFn: () => GetUserInfoById(id as string),
-  });
 
-  const initialValues = data
+  const { data: user, isLoading } = useGetUserById(id as string);
+
+  const initialValues = user
     ? {
-        email: data.email || "",
-        phone: data.phone || "",
+        email: user.email || "",
+        phone: user.phone || "",
       }
     : undefined;
   return (

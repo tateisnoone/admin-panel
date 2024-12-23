@@ -1,4 +1,5 @@
 import { EditUserInAdmin } from "@/api/admin";
+import { DASHBOARD_PATHS } from "@/routes/dashboard/index.enum";
 import { Button, Form, Input } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,10 +14,11 @@ const UsersEditForm: React.FC<{
   const { id } = useParams();
   const [form] = useForm<InitialValues>();
   const navigate = useNavigate();
+  
 
   const handleSubmit = (values: { email: string; phone: string }) => {
     EditUserInAdmin(id as string, values);
-    navigate("/dashboard/users");
+    navigate(DASHBOARD_PATHS.FOR_USERS);
   };
 
   return (
@@ -24,7 +26,7 @@ const UsersEditForm: React.FC<{
       initialValues={initialValues}
       form={form}
       onFinish={handleSubmit}
-      style={{ maxWidth: 600 }}
+      className="w-80"
     >
       <Item label="Email" name="email" rules={[{ required: true }]}>
         <Input placeholder="Enter Email" />

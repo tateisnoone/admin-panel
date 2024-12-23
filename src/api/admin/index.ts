@@ -67,18 +67,24 @@ export const CreateBlogAsAdmin = async (newBlogValues: {
   }
 };
 
-export const EditBlogAsAdmin = async (
-  id: number | string,
-  payload: {
+export const EditUserInAdmin = (id: string, payload: { email: string }) => {
+  return supabase.auth.admin.updateUserById(id, { ...payload });
+};
+export const EditBlogAsAdmin = async ({
+  id,
+  values,
+}: {
+  id: number | string;
+  values: {
     title: string;
     title_ge: string;
     description: string;
     description_ge: string;
-  }
-) => {
+  };
+}) => {
   const { data, error } = await supabase
     .from("blog")
-    .update({ ...payload })
+    .update({ ...values })
     .eq("id", id);
 
   if (error) {
@@ -99,9 +105,6 @@ export type Blog = {
   image_url: string;
 };
 
-export const EditUserInAdmin = (id: string, payload: { email: string }) => {
-  return supabase.auth.admin.updateUserById(id, { ...payload });
-};
 
 export const GetUserInfoById = (id: string) => {
   return supabase.auth.admin.getUserById(id).then((res) => {

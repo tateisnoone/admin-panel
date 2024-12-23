@@ -11,12 +11,9 @@ import SignIn from "./pages/login/login";
 import DashboardLayout from "./layouts/dashboard";
 import AuthGuardUnauthorized from "./components/route-guards/auth/is-unauthorized";
 import AuthGuardAuthorized from "./components/route-guards/auth/is-authorized";
-import Users from "./pages/users/users";
-import Blogs from "./pages/blogs/blogs";
-import UserCreateView from "./pages/users/views/create";
-import UserEditView from "./pages/users/views/edit";
-import BlogCreateView from "./pages/blogs/components/views/create";
-import BlogEditView from "./pages/blogs/components/views/edit";
+import { USERS_ROUTES } from "./routes/dashboard/users";
+import { BLOGS_ROUTES } from "./routes/dashboard/blogs";
+
 const App: React.FC = () => {
   const [, setUser] = useAtom(userAtom);
   useEffect(() => {
@@ -52,20 +49,10 @@ const App: React.FC = () => {
               </AuthGuardUnauthorized>
             }
           >
-            <Route path="users">
-              <Route index element={<Users />} />
-              <Route path="create" element={<UserCreateView />} />
-              <Route path="edit/:id" element={<UserEditView />} />{" "}
-            </Route>
+            <Route path="users">{USERS_ROUTES}</Route>
 
-            <Route path="blogs">
-              <Route index element={<Blogs />} />
-              <Route path="create" element={<BlogCreateView />} />
-              <Route path="edit/:id" element={<BlogEditView />} />
-            </Route>
+            <Route path="blogs">{BLOGS_ROUTES}</Route>
           </Route>
-
-          {/* <Route path="*" element={<NotFoundPage />} /> */}
         </Routes>
       </BrowserRouter>
     </>

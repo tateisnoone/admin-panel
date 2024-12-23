@@ -1,7 +1,6 @@
-import { getUserListAsAdmin } from "@/api/admin";
 import { mapUsersListForAdmin } from "@/api/admin/utils";
+import { useGetUsersList } from "@/react-query/query/users";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
-import { useQuery } from "@tanstack/react-query";
 import { Button, Table } from "antd";
 import Column from "antd/es/table/Column";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -16,12 +15,9 @@ type User = {
 
 const Users = () => {
   const navigate = useNavigate();
-  const { data } = useQuery({
-    queryKey: ["usersList"],
-    queryFn: getUserListAsAdmin,
+  const { data: users } = useGetUsersList({
+    queryOptions: { select: mapUsersListForAdmin },
   });
-
-  const mappedUsers = mapUsersListForAdmin(data ?? []);
 
   const handleNavigateToUserEdit = (id: string) => {
     navigate(`/dashboard/users/edit/${id}`);
@@ -38,7 +34,7 @@ const Users = () => {
         </NavLink>
       )}
       bordered
-      dataSource={mappedUsers}
+      dataSource={users}
     >
       <Column<User> title="Id" dataIndex="id" />
       <Column<User> title="Email" dataIndex="email" />

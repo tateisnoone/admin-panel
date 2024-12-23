@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../supabase/auth";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
+import { DASHBOARD_PATHS } from "@/routes/dashboard/index.enum";
 
 const SignIn: React.FC<PropsWithChildren> = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const SignIn: React.FC<PropsWithChildren> = () => {
     mutationKey: ["login"],
     mutationFn: login,
     onSuccess: () => {
-      navigate("/dashboard");
+      navigate(DASHBOARD_PATHS.FOR_USERS);
     },
     onError: (error) => {
       console.log(error);

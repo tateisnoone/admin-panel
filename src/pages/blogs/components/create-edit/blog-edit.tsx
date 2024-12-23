@@ -1,4 +1,5 @@
-import { EditBlogAsAdmin } from "@/api/admin";
+import { useEditBlog } from "@/react-query/mutation/blogs";
+import { DASHBOARD_PATHS } from "@/routes/dashboard/index.enum";
 import { Button, Form, Input } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -19,22 +20,27 @@ const BlogsEditForm: React.FC<{
   const [form] = useForm<InitialValues>();
   const navigate = useNavigate();
 
-  const handleSubmit = (values: {
-    title: string;
-    title_ge: string;
-    description: string;
-    description_ge: string;
-  }) => {
-    EditBlogAsAdmin(id as string | number, values);
-    navigate("/dashboard/blogs");
+  const { mutate: handleEditBlog } = useEditBlog();
+
+  const handleSubmit = (
+    id: string,
+    values: {
+      title: string;
+      description: string;
+      title_ge: string;
+      description_ge: string;
+    }
+  ) => {
+    handleEditBlog({ id, values });
+    navigate(DASHBOARD_PATHS.FOR_BLOGS);
   };
 
   return (
     <Form<InitialValues>
       initialValues={initialValues}
       form={form}
-      onFinish={handleSubmit}
-      style={{ maxWidth: 600 }}
+      onFinish={(values: InitialValues) => handleSubmit(id as string, values)}
+      className="w-80"
     >
       <Item label="Title" name="title" rules={[{ required: true }]}>
         <Input placeholder="Enter Title" />

@@ -1,26 +1,22 @@
-import { CreateBlogAsAdmin } from "@/api/admin";
+import { useCreateBlog } from "@/react-query/mutation/blogs";
+
 import { Button, Form, Input } from "antd";
 import { useForm } from "antd/es/form/Form";
-import { useNavigate } from "react-router-dom";
 
 const { Item } = Form;
 
 const BlogsCreateForm: React.FC = () => {
   const [form] = useForm();
-  const navigate = useNavigate();
 
-  const handleSubmit = async (values: {
+  const { mutate: handleCreateBlog } = useCreateBlog();
+
+  const handleSubmit = (values: {
     title: string;
     description: string;
     title_ge: string;
     description_ge: string;
   }) => {
-    try {
-      await CreateBlogAsAdmin(values);
-      navigate("/dashboard/blogs");
-    } catch (error) {
-      console.error("Failed to create blog:", error);
-    }
+    handleCreateBlog(values);
   };
 
   return (
